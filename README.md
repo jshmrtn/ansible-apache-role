@@ -1,4 +1,5 @@
 # Ansible Role: Apache 2.x
+[![Build Status](https://travis-ci.org/jshmrtn/ansible-role-apache.svg)](https://travis-ci.org/jshmrtn/ansible-role-apache)
 
 An Ansible Role that installs Apache 2.x on Debian/Ubuntu.
 
