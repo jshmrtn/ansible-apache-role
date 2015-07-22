@@ -1,0 +1,50 @@
+
+DirectoryIndex index.php index.html
+
+{# Set up SSL VirtualHosts #}
+
+<VirtualHost *:{{ apache_listen_port_ssl }}>
+  ServerName {{ item['servername'] }}
+{% if item['serveralias'] is defined %}
+  ServerAlias {{ item['serveralias'] }}
+{% endif %}
+  DocumentRoot {{ item['documentroot'] }}
+
+  SSLEngine on
+  SSLCipherSuite {{ apache_ssl_cipher_suite }}
+  SSLProtocol {{ apache_ssl_protocol }}
+  SSLHonorCipherOrder On
+  SSLCompression off
+  SSLCertificateFile {{ item['certificate_file'] }}
+  SSLCertificateKeyFile {{ item['certificate_key_file'] }}
+{% if item['certificate_chain_file'] is defined %}
+  SSLCertificateChainFile {{ item['certificate_chain_file'] }}
+{% endif %}
+
+{% if item['serveradmin'] is defined %}
+  ServerAdmin {{ item['serveradmin'] }}
+{% endif %}
+  <Directory "{{ item['documentroot'] }}">
+    AllowOverride All
+    Options -Indexes +FollowSymLinks
+    Require all granted
+  </Directory>
+
+  <Directory "/home/www-root/conf">
+    AllowOverride None
+    Options -Indexes +FollowSymLinks
+    Require all granted
+  </Directory>
+
+  {% if item['robots_txt_file'] is defined %}
+    AliasMatch /robots.txt {{ item['robots_txt_file'] }}
+  {% endif %}
+
+{% if item['extra_parameters'] is defined %}
+  {{ item['extra_parameters'] }}
+{% endif %}
+
+  ErrorLog ${APACHE_LOG_DIR}/{{ item['servername'] }}_error.log
+  CustomLog ${APACHE_LOG_DIR}/{{ item['servername'] }}_access.log combined
+
+</VirtualHost>
