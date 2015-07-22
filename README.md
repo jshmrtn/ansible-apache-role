@@ -22,6 +22,10 @@ TBA
 
 TBA
 
+## Contributing
+
+Contributions are welcome from everyone. We will add [contributing guidelines](CONTRIBUTING.md) as soon as possible.
+
 ## License
 
-MIT / BSD
+See [LICENSE.md](LICENSE.md) for more information.
